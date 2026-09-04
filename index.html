@@ -187,7 +187,7 @@
               <i class="fa-solid fa-id-card text-teal-400"></i>
               <span>Patient Telemetry Lookup</span>
             </h2>
-            <p class="text-xs text-slate-400 mt-0.5">Input the 10-digit receipt number and device model number to query optical data.</p>
+            <p class="text-xs text-slate-400 mt-0.5">Input the 10-digit receipt number and 4-digit device model code to query optical data.</p>
           </div>
           <div class="hidden sm:block text-right">
             <span class="text-[10px] font-mono text-slate-500 uppercase tracking-widest block">Hardware Protocol</span>
@@ -198,7 +198,7 @@
         <form id="report-search-form" onsubmit="event.preventDefault(); fetchReport();" class="space-y-4">
           <div class="grid grid-cols-1 sm:grid-cols-12 gap-4 items-end">
             
-            <!-- Bar 1 Input 1: 10-Digit Receipt Number (Cleared by default) -->
+            <!-- Bar 1 Input 1: 10-Digit Receipt Number -->
             <div class="sm:col-span-5 space-y-1.5">
               <label class="block text-xs font-semibold text-slate-300 flex items-center justify-between">
                 <span>Receipt / Patient ID <span class="text-teal-400">*</span></span>
@@ -208,23 +208,24 @@
                 <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-500">
                   <i class="fa-solid fa-receipt text-xs"></i>
                 </div>
-                <input type="text" id="input-receipt-no" maxlength="10" placeholder="e.g. 9847102026" value=""
+                <input type="text" id="input-receipt-no" maxlength="10" placeholder="e.g. 9847102026" value="9847102026"
                        oninput="this.value=this.value.replace(/\D/g,'')"
                        class="w-full bg-slate-950/90 border border-slate-800 focus:border-teal-500 focus:ring-1 focus:ring-teal-500 rounded-xl pl-9 pr-3 py-2.5 text-white font-mono text-sm tracking-widest placeholder:text-slate-600 focus:outline-none transition-all">
               </div>
             </div>
 
-            <!-- Bar 1 Input 2: Product Model Number (Cleared by default, accepts text/numbers) -->
+            <!-- Bar 1 Input 2: 4-Digit Product Model Number -->
             <div class="sm:col-span-4 space-y-1.5">
               <label class="block text-xs font-semibold text-slate-300 flex items-center justify-between">
                 <span>Product Model # <span class="text-teal-400">*</span></span>
-                <span class="text-[10px] font-mono text-slate-500">As Typed</span>
+                <span class="text-[10px] font-mono text-slate-500">4 Digits</span>
               </label>
               <div class="relative">
                 <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-500">
                   <i class="fa-solid fa-microchip text-xs"></i>
                 </div>
-                <input type="text" id="input-model-no" placeholder="e.g. ESP-8501" value=""
+                <input type="text" id="input-model-no" maxlength="4" placeholder="e.g. 8501" value="8501"
+                       oninput="this.value=this.value.replace(/\D/g,'')"
                        class="w-full bg-slate-950/90 border border-slate-800 focus:border-teal-500 focus:ring-1 focus:ring-teal-500 rounded-xl pl-9 pr-3 py-2.5 text-white font-mono text-sm tracking-widest placeholder:text-slate-600 focus:outline-none transition-all">
               </div>
             </div>
@@ -243,13 +244,13 @@
         <!-- Quick Presets -->
         <div class="pt-4 mt-4 border-t border-slate-800/60 flex flex-wrap items-center gap-2 text-xs">
           <span class="text-slate-500 font-medium text-[11px]"><i class="fa-solid fa-bolt text-amber-400 mr-1"></i> Quick Test Sample Presets:</span>
-          <button onclick="loadPreset('9847102026', 'ESP-8501')" class="px-2.5 py-1 rounded-lg bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-300 border border-emerald-500/20 text-[11px] font-mono transition-colors">
+          <button onclick="loadPreset('9847102026', '8501')" class="px-2.5 py-1 rounded-lg bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-300 border border-emerald-500/20 text-[11px] font-mono transition-colors">
             Normal (&lt;2.0)
           </button>
-          <button onclick="loadPreset('7510982341', 'ESP-8266')" class="px-2.5 py-1 rounded-lg bg-amber-500/10 hover:bg-amber-500/20 text-amber-300 border border-amber-500/20 text-[11px] font-mono transition-colors">
+          <button onclick="loadPreset('7510982341', '8266')" class="px-2.5 py-1 rounded-lg bg-amber-500/10 hover:bg-amber-500/20 text-amber-300 border border-amber-500/20 text-[11px] font-mono transition-colors">
             Mild Cataract (2.0 - 4.0)
           </button>
-          <button onclick="loadPreset('6420198753', 'ESP-9026')" class="px-2.5 py-1 rounded-lg bg-rose-500/10 hover:bg-rose-500/20 text-rose-300 border border-rose-500/20 text-[11px] font-mono transition-colors">
+          <button onclick="loadPreset('6420198753', '9026')" class="px-2.5 py-1 rounded-lg bg-rose-500/10 hover:bg-rose-500/20 text-rose-300 border border-rose-500/20 text-[11px] font-mono transition-colors">
             Severe Cataract (&gt;4.0)
           </button>
         </div>
@@ -263,7 +264,7 @@
         <div class="max-w-md mx-auto space-y-1.5">
           <h3 class="text-sm font-bold text-slate-200 uppercase tracking-wide">Report Telemetry Pending</h3>
           <p class="text-xs text-slate-400 leading-relaxed">
-            Enter the 10-digit Receipt ID and Model Number above, then click <span class="text-teal-400 font-semibold">Fetch Report</span> to decode 940nm IR scattering data from the Netra Raksha hardware.
+            Enter the 10-digit Receipt ID and 4-digit Model Number above, then click <span class="text-teal-400 font-semibold">Fetch Report</span> to decode 940nm IR scattering data from the Netra Raksha hardware.
           </p>
         </div>
         <div class="pt-2 flex justify-center items-center space-x-6 text-[11px] font-mono text-slate-500">
@@ -284,7 +285,7 @@
                 <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
                 <span>Normal Eye Clarity</span>
               </span>
-              <span class="text-xs font-mono text-slate-400">Model: <strong id="disp-model-no" class="text-white">ESP-8501</strong></span>
+              <span class="text-xs font-mono text-slate-400">Model: <strong id="disp-model-no" class="text-white">8501</strong></span>
             </div>
             <h3 class="text-lg font-extrabold text-white tracking-tight mt-1">Cataract Optical Telemetry Report</h3>
             <p class="text-xs text-slate-400 font-mono">
@@ -361,14 +362,4 @@
           <div class="relative w-full h-4 bg-slate-950 rounded-full border border-slate-800 overflow-hidden p-0.5 flex">
             <div class="w-[30%] h-full bg-emerald-500/30 border-r border-emerald-500/50 flex items-center justify-center text-[9px] font-mono text-emerald-300">Normal (&lt;2)</div>
             <div class="w-[35%] h-full bg-amber-500/30 border-r border-amber-500/50 flex items-center justify-center text-[9px] font-mono text-amber-300">Mild (2-4)</div>
-            <div class="w-[35%] h-full bg-rose-500/30 flex items-center justify-center text-[9px] font-mono text-rose-300">Severe (&gt;4)</div>
-
-            <!-- Positioned Indicator Needle Marker -->
-            <div id="meter-indicator-needle" class="absolute top-0 bottom-0 w-2.5 bg-white rounded-full shadow-lg border border-slate-900 transition-all duration-700" style="left: 20%;"></div>
-          </div>
-        </div>
-
-        <!-- Interactive Lens Beam Scatter Visualizer Canvas -->
-        <div class="glass-card rounded-2xl p-5 border border-slate-800 space-y-3">
-          <div class="flex justify-between items-center">
-            <h4 class="text-xs 
+            <div class="w-[35%] h-full bg-rose-500/30 flex items-center justify-center text-[9p
