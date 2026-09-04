@@ -187,7 +187,7 @@
               <i class="fa-solid fa-id-card text-teal-400"></i>
               <span>Patient Telemetry Lookup</span>
             </h2>
-            <p class="text-xs text-slate-400 mt-0.5">Input the 10-digit receipt number and 4-digit device model code to query optical data.</p>
+            <p class="text-xs text-slate-400 mt-0.5">Input the 10-digit receipt number and device model number to query optical data.</p>
           </div>
           <div class="hidden sm:block text-right">
             <span class="text-[10px] font-mono text-slate-500 uppercase tracking-widest block">Hardware Protocol</span>
@@ -198,7 +198,7 @@
         <form id="report-search-form" onsubmit="event.preventDefault(); fetchReport();" class="space-y-4">
           <div class="grid grid-cols-1 sm:grid-cols-12 gap-4 items-end">
             
-            <!-- Bar 1 Input 1: 10-Digit Receipt Number -->
+            <!-- Bar 1 Input 1: 10-Digit Receipt Number (Cleared by default) -->
             <div class="sm:col-span-5 space-y-1.5">
               <label class="block text-xs font-semibold text-slate-300 flex items-center justify-between">
                 <span>Receipt / Patient ID <span class="text-teal-400">*</span></span>
@@ -208,24 +208,23 @@
                 <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-500">
                   <i class="fa-solid fa-receipt text-xs"></i>
                 </div>
-                <input type="text" id="input-receipt-no" maxlength="10" placeholder="e.g. 9847102026" value="9847102026"
+                <input type="text" id="input-receipt-no" maxlength="10" placeholder="e.g. 9847102026" value=""
                        oninput="this.value=this.value.replace(/\D/g,'')"
                        class="w-full bg-slate-950/90 border border-slate-800 focus:border-teal-500 focus:ring-1 focus:ring-teal-500 rounded-xl pl-9 pr-3 py-2.5 text-white font-mono text-sm tracking-widest placeholder:text-slate-600 focus:outline-none transition-all">
               </div>
             </div>
 
-            <!-- Bar 1 Input 2: 4-Digit Product Model Number -->
+            <!-- Bar 1 Input 2: Product Model Number (Cleared by default, accepts text/numbers) -->
             <div class="sm:col-span-4 space-y-1.5">
               <label class="block text-xs font-semibold text-slate-300 flex items-center justify-between">
                 <span>Product Model # <span class="text-teal-400">*</span></span>
-                <span class="text-[10px] font-mono text-slate-500">4 Digits</span>
+                <span class="text-[10px] font-mono text-slate-500">As Typed</span>
               </label>
               <div class="relative">
                 <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-500">
                   <i class="fa-solid fa-microchip text-xs"></i>
                 </div>
-                <input type="text" id="input-model-no" maxlength="4" placeholder="e.g. 8501" value="8501"
-                       oninput="this.value=this.value.replace(/\D/g,'')"
+                <input type="text" id="input-model-no" placeholder="e.g. ESP-8501" value=""
                        class="w-full bg-slate-950/90 border border-slate-800 focus:border-teal-500 focus:ring-1 focus:ring-teal-500 rounded-xl pl-9 pr-3 py-2.5 text-white font-mono text-sm tracking-widest placeholder:text-slate-600 focus:outline-none transition-all">
               </div>
             </div>
@@ -244,13 +243,13 @@
         <!-- Quick Presets -->
         <div class="pt-4 mt-4 border-t border-slate-800/60 flex flex-wrap items-center gap-2 text-xs">
           <span class="text-slate-500 font-medium text-[11px]"><i class="fa-solid fa-bolt text-amber-400 mr-1"></i> Quick Test Sample Presets:</span>
-          <button onclick="loadPreset('9847102026', '8501')" class="px-2.5 py-1 rounded-lg bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-300 border border-emerald-500/20 text-[11px] font-mono transition-colors">
+          <button onclick="loadPreset('9847102026', 'ESP-8501')" class="px-2.5 py-1 rounded-lg bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-300 border border-emerald-500/20 text-[11px] font-mono transition-colors">
             Normal (&lt;2.0)
           </button>
-          <button onclick="loadPreset('7510982341', '8266')" class="px-2.5 py-1 rounded-lg bg-amber-500/10 hover:bg-amber-500/20 text-amber-300 border border-amber-500/20 text-[11px] font-mono transition-colors">
+          <button onclick="loadPreset('7510982341', 'ESP-8266')" class="px-2.5 py-1 rounded-lg bg-amber-500/10 hover:bg-amber-500/20 text-amber-300 border border-amber-500/20 text-[11px] font-mono transition-colors">
             Mild Cataract (2.0 - 4.0)
           </button>
-          <button onclick="loadPreset('6420198753', '9026')" class="px-2.5 py-1 rounded-lg bg-rose-500/10 hover:bg-rose-500/20 text-rose-300 border border-rose-500/20 text-[11px] font-mono transition-colors">
+          <button onclick="loadPreset('6420198753', 'ESP-9026')" class="px-2.5 py-1 rounded-lg bg-rose-500/10 hover:bg-rose-500/20 text-rose-300 border border-rose-500/20 text-[11px] font-mono transition-colors">
             Severe Cataract (&gt;4.0)
           </button>
         </div>
@@ -264,7 +263,7 @@
         <div class="max-w-md mx-auto space-y-1.5">
           <h3 class="text-sm font-bold text-slate-200 uppercase tracking-wide">Report Telemetry Pending</h3>
           <p class="text-xs text-slate-400 leading-relaxed">
-            Enter the 10-digit Receipt ID and 4-digit Model Number above, then click <span class="text-teal-400 font-semibold">Fetch Report</span> to decode 940nm IR scattering data from the Netra Raksha hardware.
+            Enter the 10-digit Receipt ID and Model Number above, then click <span class="text-teal-400 font-semibold">Fetch Report</span> to decode 940nm IR scattering data from the Netra Raksha hardware.
           </p>
         </div>
         <div class="pt-2 flex justify-center items-center space-x-6 text-[11px] font-mono text-slate-500">
@@ -285,7 +284,7 @@
                 <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
                 <span>Normal Eye Clarity</span>
               </span>
-              <span class="text-xs font-mono text-slate-400">Model: <strong id="disp-model-no" class="text-white">8501</strong></span>
+              <span class="text-xs font-mono text-slate-400">Model: <strong id="disp-model-no" class="text-white">ESP-8501</strong></span>
             </div>
             <h3 class="text-lg font-extrabold text-white tracking-tight mt-1">Cataract Optical Telemetry Report</h3>
             <p class="text-xs text-slate-400 font-mono">
@@ -372,546 +371,4 @@
         <!-- Interactive Lens Beam Scatter Visualizer Canvas -->
         <div class="glass-card rounded-2xl p-5 border border-slate-800 space-y-3">
           <div class="flex justify-between items-center">
-            <h4 class="text-xs font-bold text-white uppercase tracking-wider flex items-center gap-2">
-              <i class="fa-solid fa-atom text-teal-400"></i>
-              <span>940nm Infrared Ray Scattering Visualization</span>
-            </h4>
-            <span class="text-[10px] font-mono text-slate-500">BPW34 Reflected Signal Analysis</span>
-          </div>
-          <div class="relative w-full bg-slate-950 rounded-xl border border-slate-800 p-4 overflow-hidden flex justify-center items-center">
-            <canvas id="optics-canvas" class="w-full h-36 max-w-lg"></canvas>
-          </div>
-        </div>
-
-        <!-- Clinical Assessment & Protocol -->
-        <div class="glass-card rounded-2xl p-5 border border-slate-800 space-y-3">
-          <h4 class="text-xs font-bold text-slate-300 uppercase tracking-wider flex items-center gap-2">
-            <i class="fa-solid fa-notes-medical text-teal-400"></i>
-            <span>Clinical Summary & Recommended Action</span>
-          </h4>
-          <p id="disp-clinical-summary" class="text-xs text-slate-300 leading-relaxed font-sans">
-            The 940nm infrared reflection reading is within normal baseline (&lt;2.0). Light scatter across the crystalline lens is minimal, indicating clear vision pathways.
-          </p>
-          <div class="pt-2 border-t border-slate-800/80">
-            <span class="text-xs font-semibold text-slate-400">Recommended Guidance:</span>
-            <ul id="disp-recommendations" class="text-xs space-y-1.5 text-slate-300 mt-2">
-              <!-- Dynamically populated -->
-            </ul>
-          </div>
-        </div>
-
-      </div>
-    </section>
-
-    <!-- ==================== TAB 2: PRINTABLE CERTIFICATE SECTION ==================== -->
-    <section id="view-bar-2" class="tab-content hidden space-y-6">
-      
-      <!-- Print Header Control (Hidden during actual print) -->
-      <div class="glass-card rounded-2xl p-4 no-print flex flex-col sm:flex-row items-center justify-between gap-3 border border-slate-800">
-        <div class="flex items-center space-x-3">
-          <div class="w-9 h-9 rounded-xl bg-teal-500/10 border border-teal-500/30 flex items-center justify-center text-teal-400">
-            <i class="fa-solid fa-file-invoice text-sm"></i>
-          </div>
-          <div>
-            <h3 class="text-xs font-bold text-white uppercase tracking-wider">Official Medical Certificate Preview</h3>
-            <p class="text-[11px] text-slate-400">Formatted for standard A4 paper printing or saving as PDF.</p>
-          </div>
-        </div>
-
-        <button onclick="window.print()" 
-                class="w-full sm:w-auto bg-teal-600 hover:bg-teal-500 text-white font-semibold text-xs px-5 py-2.5 rounded-xl shadow-lg shadow-teal-600/20 transition-all flex items-center justify-center space-x-2">
-          <i class="fa-solid fa-print"></i>
-          <span>Print / Export PDF</span>
-        </button>
-      </div>
-
-      <!-- Clean Elegant Printable Certificate Document -->
-      <div id="printable-section" class="bg-white text-slate-900 rounded-2xl p-8 sm:p-10 border border-slate-200 shadow-2xl max-w-3xl mx-auto space-y-6 text-xs">
-        
-        <!-- Certificate Header -->
-        <div class="flex justify-between items-start border-b-2 border-slate-900 pb-4">
-          <div>
-            <h2 class="text-2xl font-black text-slate-900 tracking-tight font-sans">JEEVAN NETRA</h2>
-            <p class="text-xs font-bold text-teal-800 uppercase tracking-widest mt-0.5">Cataract Diagnostic Certificate</p>
-            <p class="text-[10px] text-slate-500 mt-0.5">Netra Raksha Portable Diagnostic System</p>
-          </div>
-
-          <div class="text-right text-[11px] space-y-0.5">
-            <div class="font-mono"><span class="text-slate-500">Receipt ID:</span> <strong id="print-receipt-no" class="text-slate-900">9847102026</strong></div>
-            <div class="font-mono"><span class="text-slate-500">Model #:</span> <strong id="print-model-no" class="text-slate-900">8501</strong></div>
-            <div class="text-slate-600" id="print-date">Date: 2026-09-04</div>
-          </div>
-        </div>
-
-        <!-- Patient Hardware Specs Table -->
-        <div class="grid grid-cols-2 gap-3 bg-slate-50 p-4 rounded-xl border border-slate-200 text-[11px]">
-          <div><span class="text-slate-500">Patient Identifier:</span> <span id="print-patient-id" class="font-mono font-bold text-slate-900">PAT-9847102026</span></div>
-          <div><span class="text-slate-500">Optical Emitter:</span> <span class="font-mono font-semibold text-slate-800">940nm IR LED</span></div>
-          <div><span class="text-slate-500">Photodiode Sensor:</span> <span class="font-mono font-semibold text-slate-800">BPW34 Photodiode</span></div>
-          <div><span class="text-slate-500">Core Controller:</span> <span class="font-mono font-semibold text-slate-800">ESP8266 IoT MCU</span></div>
-        </div>
-
-        <!-- Telemetry Results Table -->
-        <table class="w-full text-left border-collapse">
-          <thead>
-            <tr class="bg-slate-100 text-slate-800 font-bold border-b border-slate-300 text-[11px]">
-              <th class="py-2 px-3">Diagnostic Parameter</th>
-              <th class="py-2 px-3">Measured Telemetry</th>
-              <th class="py-2 px-3">Reference Baseline</th>
-              <th class="py-2 px-3">Status Assessment</th>
-            </tr>
-          </thead>
-          <tbody class="divide-y divide-slate-200 text-xs font-sans">
-            <tr>
-              <td class="py-2.5 px-3 font-medium">940nm Scattering Index</td>
-              <td id="print-scattering-val" class="py-2.5 px-3 font-mono font-bold text-slate-900 text-sm">1.42</td>
-              <td class="py-2.5 px-3 text-slate-600 text-[11px]">&lt;2 Normal | 2-4 Mild | &gt;4 Severe</td>
-              <td id="print-table-status" class="py-2.5 px-3 font-semibold text-teal-800">Normal Clarity</td>
-            </tr>
-            <tr>
-              <td class="py-2.5 px-3 font-medium">Hardware RGB State</td>
-              <td id="print-rgb-val" class="py-2.5 px-3 font-mono text-slate-800">GREEN</td>
-              <td class="py-2.5 px-3 text-slate-600 text-[11px]">GREEN / YELLOW / RED</td>
-              <td class="py-2.5 px-3 text-slate-700">Hardware Verified</td>
-            </tr>
-          </tbody>
-        </table>
-
-        <!-- Diagnosis Summary Box -->
-        <div class="border border-slate-300 p-4 rounded-xl space-y-1.5 bg-slate-50/50">
-          <div class="flex items-center justify-between">
-            <span class="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Clinical Conclusion</span>
-            <span id="print-diagnosis-badge" class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-900 border border-emerald-300">
-              Below 2.0 (Normal Lens)
-            </span>
-          </div>
-          <p id="print-clinical-desc" class="text-slate-800 leading-relaxed text-xs">
-            Infrared light scattering measured at 940nm wavelength is within normal parameters (<2.0). Crystalline lens transparency is maintained.
-          </p>
-        </div>
-
-        <!-- Certificate Footer Signatures -->
-        <div class="pt-6 border-t border-slate-300 flex justify-between items-end text-[11px]">
-          <div class="space-y-1">
-            <div class="w-16 h-16 bg-slate-100 border border-slate-200 rounded-lg p-1 flex items-center justify-center">
-              <!-- Placeholder QR code -->
-              <i class="fa-solid fa-qrcode text-3xl text-slate-800"></i>
-            </div>
-            <p class="text-[9px] font-mono text-slate-500 uppercase">Verification Code: JN-98471</p>
-          </div>
-
-          <div class="text-right">
-            <div class="h-8 border-b border-slate-400 w-36 ml-auto font-serif italic text-sm text-slate-800 flex items-end justify-center pb-1">
-              Dr. S. Nair
-            </div>
-            <p class="font-bold text-slate-900 mt-1">Ophthalmologist</p>
-            <p class="text-[10px] text-slate-500">Netra Raksha Diagnostic Portal</p>
-          </div>
-        </div>
-
-      </div>
-    </section>
-
-    <!-- ==================== TAB 3: INDIA EYE HOSPITAL FINDER ==================== -->
-    <section id="view-bar-3" class="tab-content hidden space-y-6">
-      
-      <!-- Search Input Card -->
-      <div class="glass-card rounded-2xl p-5 sm:p-6 border border-slate-800 space-y-4">
-        <div>
-          <h2 class="text-sm font-bold text-white uppercase tracking-wider flex items-center gap-2">
-            <i class="fa-solid fa-location-dot text-teal-400"></i>
-            <span>India Eye Clinic & Ophthalmology Center Locator</span>
-          </h2>
-          <p class="text-xs text-slate-400 mt-0.5">Type any city, district, or town in India to pinpoint ophthalmologists and eye care hospitals.</p>
-        </div>
-
-        <!-- Bar 3 Location Input Form -->
-        <form onsubmit="event.preventDefault(); searchHospitalsInIndia();" class="flex flex-col sm:flex-row gap-2.5">
-          <div class="relative flex-1">
-            <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-500">
-              <i class="fa-solid fa-magnifying-glass text-xs"></i>
-            </div>
-            <input type="text" id="hospital-location-input" placeholder="Enter location (e.g. Kochi, Kottayam, Delhi, Bengaluru, Mumbai, Chennai...)" 
-                   value="Kochi, Kerala"
-                   class="w-full bg-slate-950/90 border border-slate-800 focus:border-teal-500 focus:ring-1 focus:ring-teal-500 rounded-xl pl-9 pr-3 py-2.5 text-white text-xs placeholder:text-slate-600 focus:outline-none transition-all">
-          </div>
-          <button type="submit" class="bg-gradient-to-r from-teal-600 to-emerald-600 hover:from-teal-500 hover:to-emerald-500 text-white font-semibold text-xs px-5 py-2.5 rounded-xl shadow-lg shadow-teal-600/20 transition-all flex items-center justify-center space-x-2">
-            <i class="fa-solid fa-location-crosshairs text-xs"></i>
-            <span>Search Clinics</span>
-          </button>
-        </form>
-
-        <!-- Quick City Pills -->
-        <div class="flex flex-wrap items-center gap-2 text-xs pt-1 border-t border-slate-800/60">
-          <span class="text-slate-500 font-medium text-[11px]">Popular Locations:</span>
-          <button onclick="setHospitalLocation('Kochi, Kerala')" class="px-2.5 py-1 rounded-lg bg-slate-800/80 hover:bg-slate-700 text-slate-300 text-[11px] transition-colors">Kochi</button>
-          <button onclick="setHospitalLocation('Kottayam, Kerala')" class="px-2.5 py-1 rounded-lg bg-slate-800/80 hover:bg-slate-700 text-slate-300 text-[11px] transition-colors">Kottayam</button>
-          <button onclick="setHospitalLocation('Bengaluru, Karnataka')" class="px-2.5 py-1 rounded-lg bg-slate-800/80 hover:bg-slate-700 text-slate-300 text-[11px] transition-colors">Bengaluru</button>
-          <button onclick="setHospitalLocation('Chennai, Tamil Nadu')" class="px-2.5 py-1 rounded-lg bg-slate-800/80 hover:bg-slate-700 text-slate-300 text-[11px] transition-colors">Chennai</button>
-          <button onclick="setHospitalLocation('Delhi')" class="px-2.5 py-1 rounded-lg bg-slate-800/80 hover:bg-slate-700 text-slate-300 text-[11px] transition-colors">Delhi</button>
-          <button onclick="setHospitalLocation('Mumbai, Maharashtra')" class="px-2.5 py-1 rounded-lg bg-slate-800/80 hover:bg-slate-700 text-slate-300 text-[11px] transition-colors">Mumbai</button>
-        </div>
-      </div>
-
-      <!-- Results Grid Container -->
-      <div class="space-y-3">
-        <div class="flex items-center justify-between text-xs px-1">
-          <span class="text-slate-400">Eye centers near <strong id="current-search-location" class="text-white font-semibold">Kochi, Kerala</strong></span>
-          <span id="hospital-count-badge" class="font-mono text-teal-400 text-[11px] font-semibold">Loading...</span>
-        </div>
-
-        <div id="hospitals-list-container" class="grid grid-cols-1 md:grid-cols-2 gap-3.5">
-          <!-- Populated dynamically -->
-        </div>
-      </div>
-
-    </section>
-
-  </main>
-
-  <!-- Footer -->
-  <footer class="bg-[#0b0f19] border-t border-slate-900 py-4 text-slate-500 text-[11px] no-print mt-auto">
-    <div class="max-w-5xl mx-auto px-4 text-center flex flex-col sm:flex-row items-center justify-between gap-2">
-      <div class="flex items-center space-x-2">
-        <span class="font-bold text-slate-300">JEEVAN NETRA</span>
-        <span>•</span>
-        <span>Cataract Diagnostics</span>
-      </div>
-      <div class="font-mono text-[10px] text-slate-600">
-        940nm IR Emitter + BPW34 Photodiode + ESP8266
-      </div>
-    </div>
-  </footer>
-
-  <script>
-    // Global App State
-    let currentReceiptNo = '9847102026';
-    let currentModelNo = '8501';
-
-    // India Eye Hospitals Database Registry
-    const EYE_HOSPITALS_DB = {
-      "kochi": [
-        { name: "Giridhar Eye Institute", address: "Kadavanthra, Kochi, Kerala 682020", phone: "+91 484 417 0000", rating: "4.8 ⭐", timing: "Open 24/7" },
-        { name: "The Eye Foundation", address: "Edappally, Kochi, Kerala 682024", phone: "+91 89258 50385", rating: "4.8 ⭐", timing: "09:00 AM - 07:00 PM" },
-        { name: "Chaithanya Eye Hospital & Research Institute", address: "Ravipuram, Ernakulam, Kochi 682016", phone: "+91 81578 22555", rating: "4.8 ⭐", timing: "08:30 AM - 06:00 PM" }
-      ],
-      "kottayam": [
-        { name: "Little Flower Eye Hospital Annex", address: "Collectorate P.O, Kottayam, Kerala 686002", phone: "+91 481 256 3400", rating: "4.7 ⭐", timing: "09:00 AM - 05:00 PM" },
-        { name: "Chaithanya Eye Hospital", address: "Kanjikuzhy, Kottayam, Kerala 686004", phone: "+91 481 257 0123", rating: "4.6 ⭐", timing: "08:30 AM - 06:00 PM" }
-      ],
-      "bengaluru": [
-        { name: "Narayana Nethralaya", address: "Rajajinagar, Bengaluru, Karnataka 560010", phone: "+91 80 6612 1200", rating: "4.9 ⭐", timing: "Open 24 Hours" },
-        { name: "Prabhas Eye Hospital & Laser Centre", address: "Jayanagar, Bengaluru, Karnataka 560011", phone: "+91 80 2653 4500", rating: "4.8 ⭐", timing: "09:00 AM - 08:00 PM" }
-      ],
-      "chennai": [
-        { name: "Sankara Nethralaya", address: "College Road, Nungambakkam, Chennai 600006", phone: "+91 44 4227 1500", rating: "4.9 ⭐", timing: "08:00 AM - 06:00 PM" },
-        { name: "Aravind Eye Hospital", address: "Poonamallee High Rd, Chennai 600107", phone: "+91 44 4095 6100", rating: "4.9 ⭐", timing: "Open 24/7" }
-      ],
-      "delhi": [
-        { name: "Dr. Rajendra Prasad Centre for Ophthalmic Sciences (AIIMS)", address: "Ansari Nagar, New Delhi 110029", phone: "+91 11 2658 8500", rating: "4.9 ⭐", timing: "Open 24/7" },
-        { name: "Centre for Sight Eye Hospital", address: "Safdarjung Enclave, New Delhi 110029", phone: "+91 1800 1200 477", rating: "4.8 ⭐", timing: "09:00 AM - 07:00 PM" }
-      ],
-      "mumbai": [
-        { name: "Aditya Jyot Eye Hospital", address: "Wadala West, Mumbai, Maharashtra 400031", phone: "+91 22 2417 7600", rating: "4.8 ⭐", timing: "09:00 AM - 07:00 PM" },
-        { name: "Lions Juhu Nandlal Jalan Eye Hospital", address: "Vile Parle West, Mumbai 400056", phone: "+91 22 2618 2220", rating: "4.7 ⭐", timing: "08:30 AM - 06:00 PM" }
-      ]
-    };
-
-    // Tab Bar Navigation Switcher
-    function switchTab(tabId) {
-      document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
-      document.querySelectorAll('.tab-btn').forEach(btn => {
-        btn.classList.remove('bg-teal-600', 'text-white', 'shadow-lg', 'shadow-teal-600/20');
-        btn.classList.add('text-slate-400');
-      });
-
-      const selectedContent = document.getElementById('view-' + tabId);
-      const selectedBtn = document.getElementById('tab-' + tabId);
-
-      if (selectedContent) selectedContent.classList.remove('hidden');
-      if (selectedBtn) {
-        selectedBtn.classList.remove('text-slate-400');
-        selectedBtn.classList.add('bg-teal-600', 'text-white', 'shadow-lg', 'shadow-teal-600/20');
-      }
-
-      if (tabId === 'bar-3') {
-        searchHospitalsInIndia();
-      }
-    }
-
-    function loadPreset(receipt, model) {
-      document.getElementById('input-receipt-no').value = receipt;
-      document.getElementById('input-model-no').value = model;
-      fetchReport();
-    }
-
-    // Triggered STRICTLY upon clicking "Fetch Report"
-    function fetchReport() {
-      const icon = document.getElementById('fetch-btn-icon');
-      if (icon) icon.classList.add('animate-spin');
-
-      setTimeout(() => {
-        if (icon) icon.classList.remove('animate-spin');
-
-        const receiptVal = document.getElementById('input-receipt-no').value.trim() || '9847102026';
-        const modelVal = document.getElementById('input-model-no').value.trim() || '8501';
-
-        currentReceiptNo = receiptVal;
-        currentModelNo = modelVal;
-
-        // Calculate deterministic scattering index from inputs
-        let numSum = 0;
-        for (let i = 0; i < receiptVal.length; i++) numSum += parseInt(receiptVal.charAt(i)) || 0;
-        for (let i = 0; i < modelVal.length; i++) numSum += parseInt(modelVal.charAt(i)) || 0;
-
-        let scatterVal = ((numSum % 45) / 10 + 0.8).toFixed(2);
-
-        // Standardized presets
-        if (receiptVal === '9847102026') scatterVal = "1.42";
-        if (receiptVal === '7510982341') scatterVal = "3.15";
-        if (receiptVal === '6420198753') scatterVal = "4.85";
-
-        const floatScatter = parseFloat(scatterVal);
-
-        let stageText = "Below 2.0 (Normal)";
-        let rgbText = "GREEN (Clear)";
-        let rgbDotClass = "bg-emerald-500 shadow-glow-emerald";
-        let statusPillClass = "bg-emerald-500/10 text-emerald-400 border-emerald-500/30";
-        let statusPillText = "Normal Eye Clarity";
-        let scatterTextClass = "text-emerald-400";
-        let needlePct = Math.min(Math.max((floatScatter / 6) * 100, 5), 95);
-
-        let clinicalSummary = "";
-        let recommendations = [];
-
-        if (floatScatter < 2.0) {
-          stageText = "Below 2.0 (Normal)";
-          rgbText = "GREEN (Clear)";
-          rgbDotClass = "bg-emerald-500 shadow-glow-emerald";
-          statusPillClass = "bg-emerald-500/10 text-emerald-400 border-emerald-500/30";
-          statusPillText = "Normal Lens Clarity";
-          scatterTextClass = "text-emerald-400";
-
-          clinicalSummary = `The 940nm infrared scattering index measured by Netra Raksha is ${scatterVal} (Below 2.0). Crystalline lens transparency is maintained with negligible beam disruption.`;
-          recommendations = [
-            "Routine optical check-up recommended in 12 months.",
-            "Maintain UV protection outdoors."
-          ];
-        } else if (floatScatter >= 2.0 && floatScatter <= 4.0) {
-          stageText = "2.0 to 4.0 (Mild Cataract)";
-          rgbText = "YELLOW (Mild)";
-          rgbDotClass = "bg-amber-400 shadow-glow-amber";
-          statusPillClass = "bg-amber-500/10 text-amber-400 border-amber-500/30";
-          statusPillText = "Mild Lens Clouding";
-          scatterTextClass = "text-amber-400";
-
-          clinicalSummary = `The 940nm infrared scattering index is ${scatterVal} (Within 2.0 - 4.0). Moderate light scatter detected by the BPW34 sensor, indicating early opacification.`;
-          recommendations = [
-            "Schedule a slit-lamp consultation with an Ophthalmologist within 3 weeks.",
-            "Monitor for vision glare or night driving difficulty."
-          ];
-        } else {
-          stageText = "Above 4.0 (Severe Cataract)";
-          rgbText = "RED (Severe)";
-          rgbDotClass = "bg-rose-500 shadow-glow-rose";
-          statusPillClass = "bg-rose-500/10 text-rose-400 border-rose-500/30";
-          statusPillText = "Severe Cataract Risk";
-          scatterTextClass = "text-rose-400";
-
-          clinicalSummary = `Elevated 940nm light scattering detected at ${scatterVal} (Above 4.0). High beam dispersion observed, consistent with advanced cataract requiring clinical evaluation.`;
-          recommendations = [
-            "Urgent referral to an Ophthalmologist for surgical assessment.",
-            "Use Bar 3 (Clinic Finder) to locate nearby ophthalmology hospitals."
-          ];
-        }
-
-        // Hide empty placeholder & reveal output
-        document.getElementById('report-empty-state').classList.add('hidden');
-        document.getElementById('report-output-container').classList.remove('hidden');
-
-        // Update UI metrics
-        document.getElementById('disp-receipt-no').innerText = receiptVal;
-        document.getElementById('disp-model-no').innerText = modelVal;
-        document.getElementById('disp-scatter-val').innerText = scatterVal;
-        document.getElementById('disp-scatter-val').className = "text-3xl font-black font-mono " + scatterTextClass;
-        document.getElementById('disp-risk-stage').innerText = stageText;
-        document.getElementById('disp-risk-stage').className = "text-base font-bold mt-1 " + scatterTextClass;
-
-        document.getElementById('meter-numeric-val').innerText = scatterVal;
-        document.getElementById('meter-numeric-val').className = scatterTextClass;
-        document.getElementById('meter-indicator-needle').style.left = `calc(${needlePct}% - 5px)`;
-
-        const rgbDot = document.getElementById('rgb-indicator-dot');
-        rgbDot.className = "w-3.5 h-3.5 rounded-full " + rgbDotClass;
-        document.getElementById('disp-rgb-state').innerText = rgbText;
-
-        const pill = document.getElementById('result-status-pill');
-        pill.className = "px-3 py-1 rounded-full text-xs font-bold border flex items-center gap-1.5 " + statusPillClass;
-        pill.innerHTML = `<span class="w-2 h-2 rounded-full bg-current"></span><span>${statusPillText}</span>`;
-
-        document.getElementById('disp-clinical-summary').innerText = clinicalSummary;
-
-        const recList = document.getElementById('disp-recommendations');
-        recList.innerHTML = '';
-        recommendations.forEach(rec => {
-          const li = document.createElement('li');
-          li.className = "flex items-center space-x-2";
-          li.innerHTML = `<i class="fa-solid fa-circle-check text-teal-400 text-xs"></i> <span>${rec}</span>`;
-          recList.appendChild(li);
-        });
-
-        // Draw Canvas beam animation
-        drawOpticsCanvas(floatScatter);
-
-        // Update Bar 2 Certificate
-        document.getElementById('print-receipt-no').innerText = receiptVal;
-        document.getElementById('print-model-no').innerText = modelVal;
-        document.getElementById('print-patient-id').innerText = "PAT-" + receiptVal;
-        document.getElementById('print-scattering-val').innerText = scatterVal;
-        document.getElementById('print-rgb-val').innerText = rgbText.split(' ')[0];
-        document.getElementById('print-table-status').innerText = stageText;
-        document.getElementById('print-diagnosis-badge').innerText = stageText;
-        document.getElementById('print-clinical-desc').innerText = clinicalSummary;
-
-      }, 250);
-    }
-
-    // Canvas Optics Visualization
-    function drawOpticsCanvas(scatterVal) {
-      const canvas = document.getElementById('optics-canvas');
-      if (!canvas) return;
-      const ctx = canvas.getContext('2d');
-      
-      const width = canvas.width = canvas.parentElement.clientWidth || 400;
-      const height = canvas.height = 140;
-
-      ctx.clearRect(0, 0, width, height);
-
-      // Emitter & Sensor Nodes
-      const emitterX = 50, emitterY = 40;
-      const sensorX = 50, sensorY = 100;
-      const eyeX = width - 80, eyeY = 70;
-
-      // Draw Emitter LED (940nm IR)
-      ctx.fillStyle = '#14b8a6';
-      ctx.beginPath();
-      ctx.arc(emitterX, emitterY, 8, 0, Math.PI * 2);
-      ctx.fill();
-      ctx.fillStyle = '#99f6e4';
-      ctx.font = '10px JetBrains Mono';
-      ctx.fillText('940nm IR LED', emitterX - 35, emitterY - 14);
-
-      // Draw Photodiode Sensor
-      ctx.fillStyle = '#06b6d4';
-      ctx.beginPath();
-      ctx.arc(sensorX, sensorY, 8, 0, Math.PI * 2);
-      ctx.fill();
-      ctx.fillStyle = '#a5f3fc';
-      ctx.fillText('BPW34 Sensor', sensorX - 35, sensorY + 22);
-
-      // Draw Crystalline Lens Lens Oval
-      ctx.strokeStyle = '#38bdf8';
-      ctx.lineWidth = 3;
-      ctx.beginPath();
-      ctx.ellipse(eyeX, eyeY, 15, 35, 0, 0, Math.PI * 2);
-      ctx.stroke();
-      ctx.fillStyle = 'rgba(56, 189, 248, 0.15)';
-      ctx.fill();
-      ctx.fillStyle = '#e0f2fe';
-      ctx.fillText('Eye Lens', eyeX - 22, eyeY + 50);
-
-      // Draw Incident Beam (Emitters -> Lens)
-      ctx.strokeStyle = 'rgba(45, 212, 191, 0.8)';
-      ctx.lineWidth = 2;
-      ctx.setLineDash([4, 4]);
-      ctx.beginPath();
-      ctx.moveTo(emitterX, emitterY);
-      ctx.lineTo(eyeX, eyeY);
-      ctx.stroke();
-      ctx.setLineDash([]);
-
-      // Draw Scattered Reflected Rays (Lens -> Photodiode)
-      const numRays = Math.min(Math.round(scatterVal * 4), 20);
-      const isHighScatter = scatterVal > 2.0;
-      
-      ctx.strokeStyle = isHighScatter ? (scatterVal > 4 ? '#f43f5e' : '#f59e0b') : '#10b981';
-      ctx.lineWidth = 1.5;
-
-      for (let i = 0; i < Math.max(numRays, 3); i++) {
-        const spreadY = (Math.random() - 0.5) * (scatterVal * 18);
-        ctx.beginPath();
-        ctx.moveTo(eyeX, eyeY);
-        ctx.lineTo(sensorX, sensorY + spreadY);
-        ctx.stroke();
-      }
-    }
-
-    // Bar 3: Hospital Locator Search
-    function setHospitalLocation(locName) {
-      document.getElementById('hospital-location-input').value = locName;
-      searchHospitalsInIndia();
-    }
-
-    function searchHospitalsInIndia() {
-      const queryLoc = document.getElementById('hospital-location-input').value.trim() || 'Kochi, Kerala';
-      document.getElementById('current-search-location').innerText = queryLoc;
-
-      const listContainer = document.getElementById('hospitals-list-container');
-      const countBadge = document.getElementById('hospital-count-badge');
-
-      const cleanKey = queryLoc.toLowerCase();
-      let matchedHospitals = null;
-
-      for (let cityKey in EYE_HOSPITALS_DB) {
-        if (cleanKey.includes(cityKey)) {
-          matchedHospitals = EYE_HOSPITALS_DB[cityKey];
-          break;
-        }
-      }
-
-      if (!matchedHospitals) {
-        matchedHospitals = [
-          { name: `District Eye Care Center (${queryLoc})`, address: `Main Civil Station Road, ${queryLoc}`, phone: "+91 1800 425 1000", rating: "4.7 ⭐", timing: "09:00 AM - 05:00 PM" },
-          { name: `Sankara Vision Hospital`, address: `Station Road, ${queryLoc}`, phone: "+91 94470 46714", rating: "4.8 ⭐", timing: "Open 24/7" }
-        ];
-      }
-
-      listContainer.innerHTML = '';
-      countBadge.innerText = `${matchedHospitals.length} Centers Found`;
-
-      matchedHospitals.forEach(hosp => {
-        const card = document.createElement('div');
-        card.className = "glass-card glass-card-hover rounded-xl p-4 space-y-2 border border-slate-800 flex flex-col justify-between";
-        card.innerHTML = `
-          <div class="space-y-1">
-            <div class="flex items-start justify-between gap-2">
-              <h4 class="text-xs font-bold text-white leading-snug">${hosp.name}</h4>
-              <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-amber-500/10 text-amber-300 border border-amber-500/20 font-semibold shrink-0">${hosp.rating}</span>
-            </div>
-            <p class="text-[11px] text-slate-400 flex items-start gap-1">
-              <i class="fa-solid fa-location-dot text-slate-500 text-[10px] mt-0.5 shrink-0"></i>
-              <span>${hosp.address}</span>
-            </p>
-          </div>
-
-          <div class="pt-2 border-t border-slate-800/80 flex items-center justify-between text-[11px] font-mono">
-            <span class="text-slate-500 text-[10px]">${hosp.timing}</span>
-            <a href="tel:${hosp.phone}" class="text-teal-400 hover:text-teal-300 font-semibold flex items-center gap-1">
-              <i class="fa-solid fa-phone text-[10px]"></i>
-              <span>${hosp.phone}</span>
-            </a>
-          </div>
-        `;
-        listContainer.appendChild(card);
-      });
-    }
-
-    // Window Onload Initialization
-    window.onload = function() {
-      const today = new Date().toISOString().split('T')[0];
-      document.getElementById('print-date').innerText = "Date: " + today;
-      // Note: Kept empty state on load per requirement until user clicks Fetch.
-    };
-  </script>
-</body>
-</html>
+            <h4 class="text-xs 
