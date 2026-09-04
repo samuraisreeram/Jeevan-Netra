@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Jeevan Netra - Advanced Cataract Diagnostic Companion</title>
+  <title>Jeevan Netra - Cataract Screening & Medical Companion</title>
   
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Font Awesome Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-  <!-- Google Fonts: Inter & JetBrains Mono -->
+  <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -72,19 +72,10 @@
 
     /* Glassmorphism Surface */
     .glass-card {
-      background: rgba(15, 23, 42, 0.7);
+      background: rgba(15, 23, 42, 0.75);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
-      border: 1px solid rgba(255, 255, 255, 0.07);
-    }
-
-    .glass-card-hover {
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-    .glass-card-hover:hover {
-      border-color: rgba(45, 212, 191, 0.3);
-      box-shadow: 0 10px 30px -10px rgba(13, 148, 136, 0.15);
-      transform: translateY(-2px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
     }
 
     /* Print styling rules */
@@ -96,19 +87,18 @@
       .no-print {
         display: none !important;
       }
-      #printable-section, #printable-section * {
-        visibility: visible !important;
-      }
       #printable-section {
+        display: block !important;
         position: absolute;
         left: 0;
         top: 0;
         width: 100%;
         margin: 0;
-        padding: 0;
+        padding: 20px;
         box-shadow: none !important;
         border: none !important;
         background: #ffffff !important;
+        color: #000000 !important;
       }
     }
   </style>
@@ -116,23 +106,23 @@
 <body class="bg-[#070a11] text-slate-100 min-h-screen font-sans antialiased flex flex-col selection:bg-teal-500 selection:text-white bg-radial-mesh">
 
   <!-- Top Navigation Header -->
-  <header class="bg-[#0b0f19]/90 border-b border-slate-800/80 sticky top-0 z-50 backdrop-blur-xl">
+  <header class="bg-[#0b0f19]/90 border-b border-slate-800/80 sticky top-0 z-50 backdrop-blur-xl no-print">
     <div class="max-w-5xl mx-auto px-4 sm:px-6 py-3.5 flex items-center justify-between">
       
       <!-- Logo & Hardware Tag -->
       <div class="flex items-center space-x-3.5">
         <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-teal-500/20 to-emerald-500/10 border border-teal-500/30 flex items-center justify-center text-teal-400 shadow-glow-teal">
-          <i class="fa-solid fa-eye-low-vision text-lg"></i>
+          <i class="fa-solid fa-eye text-lg"></i>
         </div>
         <div>
           <div class="flex items-center space-x-2">
             <h1 class="text-base font-bold tracking-tight text-white font-sans">JEEVAN NETRA</h1>
-            <span class="text-[9px] font-mono px-1.5 py-0.5 rounded bg-teal-500/10 text-teal-300 border border-teal-500/20 font-semibold tracking-wider uppercase">v2.4 PRO</span>
+            <span class="text-[9px] font-mono px-1.5 py-0.5 rounded bg-teal-500/10 text-teal-300 border border-teal-500/20 font-semibold tracking-wider uppercase">CLINICAL COMPANION</span>
           </div>
           <p class="text-[11px] text-slate-400 font-medium flex items-center gap-1">
-            <span>Netra Raksha Companion</span>
+            <span>Netra Raksha Optical System</span>
             <span class="text-slate-600">•</span>
-            <span class="text-teal-400 font-mono text-[10px]">940nm IR Optics</span>
+            <span class="text-teal-400 font-mono text-[10px]">940nm IR Reflectometry</span>
           </p>
         </div>
       </div>
@@ -143,7 +133,7 @@
           <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
           <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
         </span>
-        <span class="text-[11px] text-slate-300 font-mono">ESP8266 Telemetry Ready</span>
+        <span class="text-[11px] text-slate-300 font-mono">Sensors Connected</span>
       </div>
     </div>
 
@@ -154,19 +144,19 @@
         <button id="tab-bar-1" onclick="switchTab('bar-1')" 
                 class="tab-btn py-2.5 px-3 rounded-lg text-xs font-semibold transition-all duration-200 bg-teal-600 text-white shadow-lg shadow-teal-600/20 flex items-center justify-center space-x-2">
           <i class="fa-solid fa-magnifying-glass text-xs"></i>
-          <span class="truncate">1. Report Lookup</span>
+          <span class="truncate">1. Fetch Report</span>
         </button>
 
         <button id="tab-bar-2" onclick="switchTab('bar-2')" 
                 class="tab-btn py-2.5 px-3 rounded-lg text-xs font-medium transition-all duration-200 text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 flex items-center justify-center space-x-2">
-          <i class="fa-solid fa-file-pdf text-xs"></i>
-          <span class="truncate">2. Printable Certificate</span>
+          <i class="fa-solid fa-file-prescription text-xs"></i>
+          <span class="truncate">2. Medical Prescription</span>
         </button>
 
         <button id="tab-bar-3" onclick="switchTab('bar-3')" 
                 class="tab-btn py-2.5 px-3 rounded-lg text-xs font-medium transition-all duration-200 text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 flex items-center justify-center space-x-2">
           <i class="fa-solid fa-hospital text-xs"></i>
-          <span class="truncate">3. India Clinic Finder</span>
+          <span class="truncate">3. India Hospital Locator</span>
         </button>
 
       </div>
@@ -185,36 +175,37 @@
           <div>
             <h2 class="text-sm font-bold text-white uppercase tracking-wider flex items-center gap-2">
               <i class="fa-solid fa-id-card text-teal-400"></i>
-              <span>Patient Telemetry Lookup</span>
+              <span>Cataract Screening Lookup</span>
             </h2>
-            <p class="text-xs text-slate-400 mt-0.5">Input the 10-digit receipt number and 4-digit device model code to query optical data.</p>
+            <p class="text-xs text-slate-400 mt-0.5">Enter receipt ID and product model number to fetch the patient's optical scan.</p>
           </div>
           <div class="hidden sm:block text-right">
-            <span class="text-[10px] font-mono text-slate-500 uppercase tracking-widest block">Hardware Protocol</span>
-            <span class="text-xs font-mono text-teal-400 font-semibold">940nm Photodiode Scan</span>
+            <span class="text-[10px] font-mono text-slate-500 uppercase tracking-widest block">Screening Protocol</span>
+            <span class="text-xs font-mono text-teal-400 font-semibold">940nm Reflectometry</span>
           </div>
         </div>
 
         <form id="report-search-form" onsubmit="event.preventDefault(); fetchReport();" class="space-y-4">
           <div class="grid grid-cols-1 sm:grid-cols-12 gap-4 items-end">
             
-            <!-- Bar 1 Input 1: 10-Digit Receipt Number -->
+            <!-- Input 1: 10-Digit Receipt Number -->
             <div class="sm:col-span-5 space-y-1.5">
               <label class="block text-xs font-semibold text-slate-300 flex items-center justify-between">
-                <span>Receipt / Patient ID <span class="text-teal-400">*</span></span>
+                <span>Receipt Number <span class="text-teal-400">*</span></span>
                 <span class="text-[10px] font-mono text-slate-500">10 Digits</span>
               </label>
               <div class="relative">
                 <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-500">
                   <i class="fa-solid fa-receipt text-xs"></i>
                 </div>
-                <input type="text" id="input-receipt-no" maxlength="10" placeholder="e.g. 9847102026" value="9847102026"
+                <!-- EMPTY BY DEFAULT -->
+                <input type="text" id="input-receipt-no" maxlength="10" placeholder="Enter 10-digit Receipt No." value=""
                        oninput="this.value=this.value.replace(/\D/g,'')"
                        class="w-full bg-slate-950/90 border border-slate-800 focus:border-teal-500 focus:ring-1 focus:ring-teal-500 rounded-xl pl-9 pr-3 py-2.5 text-white font-mono text-sm tracking-widest placeholder:text-slate-600 focus:outline-none transition-all">
               </div>
             </div>
 
-            <!-- Bar 1 Input 2: 4-Digit Product Model Number -->
+            <!-- Input 2: 4-Digit Product Model Number -->
             <div class="sm:col-span-4 space-y-1.5">
               <label class="block text-xs font-semibold text-slate-300 flex items-center justify-between">
                 <span>Product Model # <span class="text-teal-400">*</span></span>
@@ -224,7 +215,8 @@
                 <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-500">
                   <i class="fa-solid fa-microchip text-xs"></i>
                 </div>
-                <input type="text" id="input-model-no" maxlength="4" placeholder="e.g. 8501" value="8501"
+                <!-- EMPTY BY DEFAULT -->
+                <input type="text" id="input-model-no" maxlength="4" placeholder="Enter 4-digit Model" value=""
                        oninput="this.value=this.value.replace(/\D/g,'')"
                        class="w-full bg-slate-950/90 border border-slate-800 focus:border-teal-500 focus:ring-1 focus:ring-teal-500 rounded-xl pl-9 pr-3 py-2.5 text-white font-mono text-sm tracking-widest placeholder:text-slate-600 focus:outline-none transition-all">
               </div>
@@ -234,43 +226,38 @@
             <div class="sm:col-span-3">
               <button type="submit" id="btn-fetch-report" 
                       class="w-full bg-gradient-to-r from-teal-600 to-emerald-600 hover:from-teal-500 hover:to-emerald-500 text-white font-semibold text-xs py-3 px-4 rounded-xl shadow-lg shadow-teal-600/25 active:scale-[0.98] transition-all flex items-center justify-center space-x-2 cursor-pointer">
-                <i class="fa-solid fa-arrows-rotate text-xs" id="fetch-btn-icon"></i>
+                <i class="fa-solid fa-magnifying-glass text-xs" id="fetch-btn-icon"></i>
                 <span>Fetch Report</span>
               </button>
             </div>
           </div>
         </form>
 
-        <!-- Quick Presets -->
+        <!-- Quick Sample Helpers -->
         <div class="pt-4 mt-4 border-t border-slate-800/60 flex flex-wrap items-center gap-2 text-xs">
-          <span class="text-slate-500 font-medium text-[11px]"><i class="fa-solid fa-bolt text-amber-400 mr-1"></i> Quick Test Sample Presets:</span>
+          <span class="text-slate-500 font-medium text-[11px]"><i class="fa-solid fa-bolt text-amber-400 mr-1"></i> Quick Test Demos:</span>
           <button onclick="loadPreset('9847102026', '8501')" class="px-2.5 py-1 rounded-lg bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-300 border border-emerald-500/20 text-[11px] font-mono transition-colors">
-            Normal (&lt;2.0)
+            Normal (&lt;2.0 Green)
           </button>
-          <button onclick="loadPreset('7510982341', '8266')" class="px-2.5 py-1 rounded-lg bg-amber-500/10 hover:bg-amber-500/20 text-amber-300 border border-amber-500/20 text-[11px] font-mono transition-colors">
-            Mild Cataract (2.0 - 4.0)
+          <button onclick="loadPreset('7510982341', '8266')" class="px-2.5 py-1 rounded-lg bg-yellow-500/10 hover:bg-yellow-500/20 text-yellow-300 border border-yellow-500/20 text-[11px] font-mono transition-colors">
+            Mild Cataract (2.0 - 4.0 Yellow)
           </button>
-          <button onclick="loadPreset('6420198753', '9026')" class="px-2.5 py-1 rounded-lg bg-rose-500/10 hover:bg-rose-500/20 text-rose-300 border border-rose-500/20 text-[11px] font-mono transition-colors">
-            Severe Cataract (&gt;4.0)
+          <button onclick="loadPreset('6420198753', '9026')" class="px-2.5 py-1 rounded-lg bg-red-500/10 hover:bg-red-500/20 text-red-300 border border-red-500/20 text-[11px] font-mono transition-colors">
+            Severe Cataract (&gt;4.0 Red)
           </button>
         </div>
       </div>
 
-      <!-- INITIAL EMPTY STATE (Shown strictly until user clicks Fetch Report) -->
+      <!-- INITIAL EMPTY STATE -->
       <div id="report-empty-state" class="glass-card rounded-2xl p-10 text-center space-y-4 border border-dashed border-slate-800">
         <div class="w-16 h-16 rounded-2xl bg-slate-900 border border-slate-800 flex items-center justify-center text-teal-400 mx-auto text-2xl shadow-inner">
-          <i class="fa-solid fa-circle-nodes"></i>
+          <i class="fa-solid fa-folder-open"></i>
         </div>
         <div class="max-w-md mx-auto space-y-1.5">
-          <h3 class="text-sm font-bold text-slate-200 uppercase tracking-wide">Report Telemetry Pending</h3>
+          <h3 class="text-sm font-bold text-slate-200 uppercase tracking-wide">No Report Loaded</h3>
           <p class="text-xs text-slate-400 leading-relaxed">
-            Enter the 10-digit Receipt ID and 4-digit Model Number above, then click <span class="text-teal-400 font-semibold">Fetch Report</span> to decode 940nm IR scattering data from the Netra Raksha hardware.
+            Please enter a 10-digit Receipt Number and 4-digit Product Model Number above, then click <strong class="text-teal-400 font-semibold">Fetch Report</strong> to view diagnostic results.
           </p>
-        </div>
-        <div class="pt-2 flex justify-center items-center space-x-6 text-[11px] font-mono text-slate-500">
-          <span class="flex items-center gap-1.5"><i class="fa-solid fa-check-double text-teal-500"></i> BPW34 Sensor</span>
-          <span class="flex items-center gap-1.5"><i class="fa-solid fa-lightbulb text-teal-500"></i> 940nm IR LED</span>
-          <span class="flex items-center gap-1.5"><i class="fa-solid fa-wifi text-teal-500"></i> ESP8266 IoT</span>
         </div>
       </div>
 
@@ -281,22 +268,22 @@
         <div class="glass-card rounded-2xl p-5 sm:p-6 border border-slate-800 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <div class="space-y-1">
             <div class="flex items-center space-x-3">
-              <span id="result-status-pill" class="px-3 py-1 rounded-full text-xs font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 flex items-center gap-1.5">
-                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-                <span>Normal Eye Clarity</span>
+              <span id="result-status-pill" class="px-3 py-1 rounded-full text-xs font-bold border flex items-center gap-1.5">
+                <span id="status-pill-dot" class="w-2 h-2 rounded-full animate-pulse"></span>
+                <span id="status-pill-text">Normal Eye Clarity</span>
               </span>
-              <span class="text-xs font-mono text-slate-400">Model: <strong id="disp-model-no" class="text-white">8501</strong></span>
+              <span class="text-xs font-mono text-slate-400">Device Model: <strong id="disp-model-no" class="text-white">--</strong></span>
             </div>
-            <h3 class="text-lg font-extrabold text-white tracking-tight mt-1">Cataract Optical Telemetry Report</h3>
+            <h3 class="text-lg font-extrabold text-white tracking-tight mt-1">Cataract Reflectometry Screening Report</h3>
             <p class="text-xs text-slate-400 font-mono">
-              Receipt ID: <span id="disp-receipt-no" class="text-teal-400 font-semibold">9847102026</span> &nbsp;|&nbsp; Tested: <span id="disp-timestamp" class="text-slate-300">2026-09-04</span>
+              Receipt ID: <span id="disp-receipt-no" class="text-teal-400 font-semibold">--</span> &nbsp;|&nbsp; Test Date: <span id="disp-timestamp" class="text-slate-300">--</span>
             </p>
           </div>
 
           <div class="flex items-center space-x-2 w-full sm:w-auto">
-            <button onclick="switchTab('bar-2')" class="flex-1 sm:flex-initial bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold px-4 py-2.5 rounded-xl border border-slate-700 transition-all flex items-center justify-center space-x-2">
-              <i class="fa-solid fa-print text-teal-400"></i>
-              <span>Open Certificate</span>
+            <button onclick="switchTab('bar-2')" class="flex-1 sm:flex-initial bg-teal-600 hover:bg-teal-500 text-white text-xs font-semibold px-4 py-2.5 rounded-xl transition-all flex items-center justify-center space-x-2">
+              <i class="fa-solid fa-file-prescription text-white"></i>
+              <span>View Medical Prescription</span>
             </button>
           </div>
         </div>
@@ -305,61 +292,91 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           
           <!-- Metric 1: Scattering Index -->
-          <div class="glass-card glass-card-hover rounded-2xl p-4 space-y-2 border border-slate-800">
+          <div class="glass-card rounded-2xl p-4 space-y-2 border border-slate-800">
             <div class="flex justify-between items-center text-[11px] font-semibold text-slate-400 uppercase tracking-wider">
               <span>Scattering Index</span>
               <i class="fa-solid fa-wave-square text-teal-400"></i>
             </div>
-            <div id="disp-scatter-val" class="text-3xl font-black font-mono text-emerald-400">1.42</div>
-            <div class="text-[11px] text-slate-400">Reflected 940nm light intensity ratio</div>
+            <div id="disp-scatter-val" class="text-3xl font-black font-mono">1.42</div>
+            <div class="text-[11px] text-slate-400">Light reflection opacity score</div>
           </div>
 
           <!-- Metric 2: Diagnosis Stage -->
-          <div class="glass-card glass-card-hover rounded-2xl p-4 space-y-2 border border-slate-800">
+          <div class="glass-card rounded-2xl p-4 space-y-2 border border-slate-800">
             <div class="flex justify-between items-center text-[11px] font-semibold text-slate-400 uppercase tracking-wider">
-              <span>Classification</span>
-              <i class="fa-solid fa-stethoscope text-teal-400"></i>
+              <span>Diagnostic Level</span>
+              <i class="fa-solid fa-notes-medical text-teal-400"></i>
             </div>
-            <div id="disp-risk-stage" class="text-base font-bold text-emerald-400 mt-1">Below 2.0 (Normal)</div>
-            <div class="text-[10px] text-slate-400 font-mono">Range: &lt;2 Clear | 2-4 Mild | &gt;4 Severe</div>
+            <div id="disp-risk-stage" class="text-base font-bold mt-1">Below 2.0 (Normal)</div>
+            <div class="text-[10px] text-slate-400 font-mono">Scale: &lt;2 Normal | 2-4 Mild | &gt;4 Severe</div>
           </div>
 
           <!-- Metric 3: RGB Indicator -->
-          <div class="glass-card glass-card-hover rounded-2xl p-4 space-y-2 border border-slate-800">
+          <div class="glass-card rounded-2xl p-4 space-y-2 border border-slate-800">
             <div class="flex justify-between items-center text-[11px] font-semibold text-slate-400 uppercase tracking-wider">
               <span>Hardware LED</span>
               <i class="fa-solid fa-lightbulb text-teal-400"></i>
             </div>
             <div class="flex items-center space-x-2 mt-1">
-              <div id="rgb-indicator-dot" class="w-3.5 h-3.5 rounded-full bg-emerald-500 shadow-glow-emerald"></div>
-              <span id="disp-rgb-state" class="text-sm font-bold text-white">GREEN (Clear)</span>
+              <div id="rgb-indicator-dot" class="w-3.5 h-3.5 rounded-full"></div>
+              <span id="disp-rgb-state" class="text-sm font-bold text-white">GREEN (Normal)</span>
             </div>
-            <div class="text-[11px] text-slate-400">Netra Raksha RGB visual cue</div>
+            <div class="text-[11px] text-slate-400">Netra Raksha optical status</div>
           </div>
 
           <!-- Metric 4: Hardware Specs -->
-          <div class="glass-card glass-card-hover rounded-2xl p-4 space-y-2 border border-slate-800">
+          <div class="glass-card rounded-2xl p-4 space-y-2 border border-slate-800">
             <div class="flex justify-between items-center text-[11px] font-semibold text-slate-400 uppercase tracking-wider">
-              <span>Optical Engine</span>
+              <span>Optical Sensor</span>
               <i class="fa-solid fa-microchip text-teal-400"></i>
             </div>
             <div class="text-xs font-mono font-bold text-slate-200 mt-1">940nm IR + BPW34</div>
-            <div class="text-[11px] text-slate-400 font-mono">ESP8266 Sampling Engine</div>
+            <div class="text-[11px] text-slate-400 font-mono">Precision photodiode scan</div>
           </div>
 
         </div>
 
-        <!-- Visual Spectrum Gauge Bar -->
+        <!-- Visual Spectrum Scale Bar -->
         <div class="glass-card rounded-2xl p-5 border border-slate-800 space-y-3">
           <div class="flex justify-between items-center text-xs">
             <span class="font-bold text-white uppercase tracking-wider flex items-center gap-1.5">
-              <i class="fa-solid fa-gauge-high text-teal-400"></i> Clinical Scattering Scale
+              <i class="fa-solid fa-gauge-high text-teal-400"></i> Clinical Opacity Scale
             </span>
-            <span class="font-mono text-slate-400 text-[11px]">Current Value: <strong id="meter-numeric-val" class="text-emerald-400">1.42</strong></span>
+            <span class="font-mono text-slate-400 text-[11px]">Recorded Score: <strong id="meter-numeric-val">1.42</strong></span>
           </div>
 
           <!-- Spectrum Bar Container -->
-          <div class="relative w-full h-4 bg-slate-950 rounded-full border border-slate-800 overflow-hidden p-0.5 flex">
-            <div class="w-[30%] h-full bg-emerald-500/30 border-r border-emerald-500/50 flex items-center justify-center text-[9px] font-mono text-emerald-300">Normal (&lt;2)</div>
-            <div class="w-[35%] h-full bg-amber-500/30 border-r border-amber-500/50 flex items-center justify-center text-[9px] font-mono text-amber-300">Mild (2-4)</div>
-            <div class="w-[35%] h-full bg-rose-500/30 flex items-center justify-center text-[9p
+          <div class="relative w-full h-5 bg-slate-950 rounded-full border border-slate-800 overflow-hidden p-0.5 flex">
+            <div class="w-[33%] h-full bg-emerald-500/30 border-r border-emerald-500/50 flex items-center justify-center text-[9px] font-mono text-emerald-300 font-bold">Normal (&lt;2 Green)</div>
+            <div class="w-[33%] h-full bg-amber-500/30 border-r border-amber-500/50 flex items-center justify-center text-[9px] font-mono text-yellow-300 font-bold">Mild (2-4 Yellow)</div>
+            <div class="w-[34%] h-full bg-rose-500/30 flex items-center justify-center text-[9px] font-mono text-red-300 font-bold">Severe (&gt;4 Red)</div>
+
+            <!-- Indicator Marker -->
+            <div id="meter-indicator-needle" class="absolute top-0 bottom-0 w-2.5 bg-white rounded-full shadow-lg border border-slate-900 transition-all duration-700" style="left: 20%;"></div>
+          </div>
+        </div>
+
+        <!-- Action Guidance Banner -->
+        <div id="action-guidance-card" class="p-5 rounded-2xl border text-slate-200 space-y-2">
+          <div class="flex items-center space-x-2 font-bold text-sm">
+            <i id="action-guidance-icon" class="fa-solid fa-circle-check"></i>
+            <span id="action-guidance-title">Screening Summary & Action Steps</span>
+          </div>
+          <p id="action-guidance-text" class="text-xs leading-relaxed">
+            The eye lens shows normal light transparency with no significant scattering detected. Routine annual eye checkup is advised.
+          </p>
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- ==================== TAB 2: MEDICAL PRESCRIPTION & REPORT ==================== -->
+    <section id="view-bar-2" class="tab-content hidden space-y-6">
+      
+      <!-- Print Actions Bar -->
+      <div class="flex items-center justify-between no-print bg-slate-900/90 border border-slate-800 p-4 rounded-2xl">
+        <div>
+          <h2 class="text-sm font-bold text-white flex items-center gap-2">
+            <i class="fa-solid fa-file-prescription text-teal-400"></i>
+            <span>Medical
